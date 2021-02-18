@@ -6,6 +6,8 @@
 
 <br> <br>
 
-  <button mat-raised-button color="primary" style="margin-left: 35%;">TURN-ON</button>
-  <button mat-raised-button color="accent" style="margin-left: 5%;">TURN-OFF</button>
+  <button mat-raised-button color="primary" style="margin-left: 35%;" (click)="switchOn()">TURN-ON</button>
+  <button mat-raised-button color="accent" style="margin-left: 5%;" (click)="switchOff()">TURN-OFF</button>
+
+<p>The button is {{status}}</p>
 
