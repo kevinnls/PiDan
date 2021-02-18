@@ -25,7 +25,7 @@ export class AppComponent {
 
   switchOn(){
     this.on = true;
-    this.http.post<{message: string}>("http://localhost:3000/lights", this.status).subscribe((response) => {
+    this.http.post<{message: string}>("http://localhost:3000/lights/on", this.status).subscribe((response) => {
       console.log(response)
     })
     this.status = "The light is ON"
@@ -33,8 +33,8 @@ export class AppComponent {
 
   switchOff(){
     this.on = true;
-    this.http.post("http://localhost:3000/lights", this.status).subscribe(() => {
-
+    this.http.post<{message:string}>("http://localhost:3000/lights/off", this.status).subscribe((response) => {
+      console.log(response)
     })
     this.status = "The light is OFF"
   }
