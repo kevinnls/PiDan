@@ -36,52 +36,49 @@
   0. You just DO WHAT THE FUCK YOU WANT TO.
 */
 
-const { spawn } = require('child_process');
+const { spawn } = require("child_process");
 
 class runPythonScript {
+  constructor(pyArgs, jsonResponse) {
+    try {
+      if (typeof pyArgs === "string") {
+        this.args = [pyArgs];
+      } else if (Array.isArray(pyArgs)) {
+        this.args = pyArgs;
+      } else {
+        throw "ARG_TypeMismatch";
+        return;
+      }
+    } catch (err) {
+      this.constructor.printError(err);
+    }
+    return this.run();
+  }
 
-	constructor (pyArgs, jsonResponse) {
-		try {
-			if(typeof(pyArgs) === 'string') {
-				this.args = [pyArgs]
-			} else if (Array.isArray(pyArgs)) {
-				this.args = pyArgs
-			} else {
-				throw "ARG_TypeMismatch"
-				return
-			}
-		} catch(err) {
-			this.constructor.printError(err)
-		}
-		return this.run()
-	}
+  static printUsage() {
+    console.log(`USAGE: ${runPythonScript.name}( pyArgs ); \
+		\n\tpyArgs\t\t - "/path/to/file" OR ["array", "of, "args"]`);
+  }
+  static printError(err) {
+    if (err === "ARG_TypeMismatch") {
+      console.error(`ERR: arguments mismatched \n`);
+      this.printUsage();
+    }
+  }
 
-	static printUsage(){
-		console.log(`USAGE: ${runPythonScript.name}( pyArgs ); \
-		\n\tpyArgs\t\t - "/path/to/file" OR ["array", "of, "args"]`)
-	}
-	static printError(err){
-		if (err === "ARG_TypeMismatch") {
-			console.error(`ERR: arguments mismatched \n`)
-			this.printUsage()
-		}
-	}
-
-	run() {
-		const pyChild = spawn("python", this.args)
-		pyChild.stdout.on('data', (data) => {
-			console.log(`py stdout: ${data}`)
-		})
-		pyChild.stderr.on('data', (data) => {
-			console.log(`py stderr: ${data}`)
-		})
-		pyChild.on('close', (code) => {
-			if(code === 0)
-				return true
-			else
-				return false
-		})
-}
+  run() {
+    const pyChild = spawn("python", this.args);
+    pyChild.stdout.on("data", (data) => {
+      console.log(`py stdout: ${data}`);
+    });
+    pyChild.stderr.on("data", (data) => {
+      console.log(`py stderr: ${data}`);
+    });
+    pyChild.on("close", (code) => {
+      if (code === 0) return true;
+      else return false;
+    });
+  }
 }
 
-module.exports = {runPythonScript}
+module.exports = { runPythonScript };
