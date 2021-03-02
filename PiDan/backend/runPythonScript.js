@@ -58,7 +58,7 @@ class runPythonScript {
 
 	static printUsage(){
 		console.log(`USAGE: ${runPythonScript.name}( pyArgs ); \
-		\n\tpyArgs\t\t - "/path/to/file" OR ["array", "of, "args"]`
+		\n\tpyArgs\t\t - "/path/to/file" OR ["array", "of, "args"]`)
 	}
 	static printError(err){
 		if (err === "ARG_TypeMismatch") {
@@ -81,6 +81,7 @@ class runPythonScript {
 			else
 				return false
 		})
+}
 }
 
 module.exports = {runPythonScript}
